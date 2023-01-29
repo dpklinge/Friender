@@ -1,0 +1,30 @@
+server:
+  port: 8081
+#  servlet:
+#    context-path: "TestContext"
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432
+    username: postgres
+    password: postgres
+  datasource:
+    driver-class-name: r2dbc-postgres
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:postgresql://localhost:5432/
+    user: postgres
+    password: postgres
+
+#swagger-ui config
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    operationsSorter: method
+#    tagsSorter: alpha
+#    disable-swagger-default-url: true
+
+logging:
+  level:
+    org:
+      flyway: debug
+    root: info
