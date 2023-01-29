@@ -1,5 +1,5 @@
 CREATE TABLE app_user (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
     display_name TEXT NOT NULL,
     password TEXT NOT NULL,
     email TEXT NOT NULL,

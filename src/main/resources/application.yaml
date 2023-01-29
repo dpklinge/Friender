@@ -28,3 +28,5 @@ logging:
     org:
       flyway: debug
     root: info
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parameters

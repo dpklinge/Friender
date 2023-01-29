@@ -1,4 +1,4 @@
-package com.clearintentions.ClearIntentionsServer.models
+package com.clearintentions.friender.models
 
 data class UserSearchPreferences(
     val intentions: List<Intention>,

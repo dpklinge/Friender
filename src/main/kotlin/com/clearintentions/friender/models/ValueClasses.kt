@@ -1,9 +1,7 @@
-package com.clearintentions.ClearIntentionsServer.models
+package com.clearintentions.friender.models
 
-import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.apache.commons.validator.routines.EmailValidator
-import java.lang.IllegalArgumentException
 
 @JvmInline
 value class DisplayName(val value: String) {
@@ -25,11 +23,7 @@ private val phoneNumberUtil = PhoneNumberUtil.getInstance()
 @JvmInline
 value class PhoneNumber(val value: String) {
     init {
-        try {
-            require(phoneNumberUtil.isValidNumber(phoneNumberUtil.parse(value, "USA")))
-        }catch (e: NumberParseException){
-            throw IllegalArgumentException("Invalid phone number")
-        }
+        require(phoneNumberUtil.isPossibleNumber(value, "US"))
     }
 }
 
