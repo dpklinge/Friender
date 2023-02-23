@@ -7,6 +7,6 @@ import java.util.UUID
 data class UserLocation(
     @Id
     val id: UUID,
-    val latestLocation: Point,
-    val homeLocation: Point?
+    val currentLocation: Point,
+    val homeLocation: Point
 )
