@@ -1,1 +1,1 @@
-rootProject.name = "ClearIntentionsServer"
+rootProject.name = "TbdAppServer"
