@@ -1,5 +1,6 @@
 package com.clearintentions.friender.controllers
 
+import com.clearintentions.friender.errors.ClearIntentionsServerError
 import com.clearintentions.friender.models.*
 import com.clearintentions.friender.models.registration.RegistrationInput
 import com.clearintentions.friender.models.registration.RegistrationOutcome
@@ -28,9 +29,21 @@ class RegistrationController(val registrationService: RegistrationService) {
                         schema = Schema(implementation = RegistrationOutcome::class)
                     )
                 ]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        schema = Schema(implementation = ClearIntentionsServerError::class)
+                    )
+                ]
             )
         ]
     )
     @PostMapping("register")
-    suspend fun registerUser(@Valid @RequestBody userRegistration: RegistrationInput) = registrationService.registerUser(userRegistration)
+    suspend fun registerUser(
+        @Valid @RequestBody
+        userRegistration: RegistrationInput
+    ) = registrationService.registerUser(userRegistration)
 }

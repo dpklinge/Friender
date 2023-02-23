@@ -19,19 +19,25 @@ import org.mockito.Mockito.verifyNoInteractions
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.UUID
 
 class RegistrationServiceTest {
     private lateinit var registrationService: RegistrationService
+
     @Mock
     private lateinit var userRepository: UserRepository
+
     @Mock
     private lateinit var lookupService: UserLookupService
+
+    @Mock
+    private lateinit var passwordEncoder: PasswordEncoder
 
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        registrationService = RegistrationService(userRepository, lookupService)
+        registrationService = RegistrationService(userRepository, lookupService, passwordEncoder)
     }
 
     @Test
@@ -74,6 +80,7 @@ class RegistrationServiceTest {
             verifyNoInteractions(userRepository)
         }
     }
+
     @Test
     fun `registration fails when phone number and email already exist`() {
         runBlocking {
@@ -121,5 +128,5 @@ class RegistrationServiceTest {
         phoneNumber: String = ("(980)-111-1111"),
         gender: Gender = Gender.NONBINARY,
         age: Int = (20)
-    ) = AppUser( displayName, password, email, phoneNumber, gender, age, id)
+    ) = AppUser(displayName, password, email, phoneNumber, gender, age, id)
 }

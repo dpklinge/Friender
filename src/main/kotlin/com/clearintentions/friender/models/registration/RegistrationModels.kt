@@ -3,23 +3,22 @@ package com.clearintentions.friender.models.registration
 import com.clearintentions.friender.errors.validation.ValidationError
 import com.clearintentions.friender.models.*
 import com.clearintentions.friender.validators.ValidEmail
-import org.jetbrains.annotations.NotNull
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import com.clearintentions.friender.validators.ValidPhoneNumber
+import javax.validation.constraints.*
 
 data class RegistrationInput(
-    @NotNull
-    @Size(min = 2, max = 15, message = "Display name has invalid length - length should be between 2-15 characters")
+    @field:Size(min = 2, max = 15, message = "Display name has invalid length - length should be between 2-15 characters")
     val displayName: String,
-    @NotNull
-    @NotBlank
-    @Size(min = 12, message = "Password too short, must be at least 12 characters")
+    @field:Size(min = 12, message = "Password too short, must be at least 12 characters")
     val password: String,
     val passwordConfirmation: String,
     @ValidEmail
     val email: String,
+    @ValidPhoneNumber
     val phoneNumber: String,
     val gender: Gender,
+    @field:Max(value = 130, message = "That age seems pretty unlikely")
+    @field:Min(value = 18, message = "Adults only for now")
     val age: Int
 )
 data class RegistrationOutcome(

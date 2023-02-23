@@ -9,6 +9,7 @@ import com.clearintentions.friender.errors.InformationNotFoundError
 import com.clearintentions.friender.errors.InvalidInputError
 import com.clearintentions.friender.errors.exceptions.InformationNotFoundException
 import com.clearintentions.friender.models.AppUser
+import com.clearintentions.friender.models.toStandardizedPhoneNumberFormat
 import com.clearintentions.friender.repositories.UserRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
@@ -38,7 +39,7 @@ class UserLookupService(private val userRepository: UserRepository) {
             val emailLookup = lookupByEmail(username)
             if (emailLookup.isLeft()) {
                 logger.debug { "Email lookup failed, trying phone number" }
-                lookupByPhone(username).bind()
+                lookupByPhone(username.toStandardizedPhoneNumberFormat()).bind()
             } else {
                 logger.debug { "Email lookup succeeded, returning" }
                 emailLookup.bind()

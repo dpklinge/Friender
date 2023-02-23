@@ -4,7 +4,7 @@ server:
 #    context-path: "TestContext"
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432
+    url: r2dbc:postgresql://localhost:5432/postgis_app_locations
     username: postgres
     password: postgres
   datasource:
@@ -12,7 +12,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:postgresql://localhost:5432/
+    url: jdbc:postgresql://localhost:5432/postgis_app_locations
     user: postgres
     password: postgres
 
@@ -22,7 +22,8 @@ spring:
 #    operationsSorter: method
 #    tagsSorter: alpha
 #    disable-swagger-default-url: true
-
+security:
+  ignored: /**
 logging:
   level:
     org:

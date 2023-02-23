@@ -7,20 +7,20 @@ import javax.validation.ConstraintValidatorContext
 import javax.validation.Payload
 import kotlin.reflect.KClass
 
-
 class SpringEmailValidator : ConstraintValidator<ValidEmail, String> {
-    override fun isValid(email: String, context: ConstraintValidatorContext
-    ) : Boolean{
-        return if(!EmailValidator.getInstance().isValid(email)) {
-            //This disables the default message provided in @ValidEmail and supplies a new message.
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Invalid email provided.").addConstraintViolation();
-            false;
-        }else{
+    override fun isValid(
+        email: String,
+        context: ConstraintValidatorContext
+    ): Boolean {
+        return if (!EmailValidator.getInstance().isValid(email)) {
+            // This disables the default message provided in @ValidEmail and supplies a new message.
+            context.disableDefaultConstraintViolation()
+            context.buildConstraintViolationWithTemplate("Invalid email provided.").addConstraintViolation()
+            false
+        } else {
             true
         }
     }
-
 }
 
 @Target(AnnotationTarget.FIELD)

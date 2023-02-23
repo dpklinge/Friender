@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class SwaggerConfig {
     @Bean
-    fun openapi() = OpenAPI().info(Info().title("ClearIntentionsServer"))
+    fun openapi() = OpenAPI().info(Info().title("ClearIntentionsServer").version("0.1-alpha"))
 }

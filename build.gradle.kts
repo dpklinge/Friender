@@ -21,7 +21,8 @@ ktlint {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-// 	implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -36,9 +37,16 @@ dependencies {
     // logging
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 
+    // postgres
+    implementation("org.postgresql:postgresql")
+    implementation("org.postgresql:r2dbc-postgresql")
+
     // flyway
-    runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core:9.12.0")
+
+    // postgis JTS support libraries
+    implementation("org.locationtech.jts:jts-core:1.19.0")
+    implementation("com.graphhopper.external:jackson-datatype-jts:2.14")
 
     // Swaggerx`
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.12")
@@ -47,8 +55,6 @@ dependencies {
     // Validators
     implementation("commons-validator:commons-validator:1.7")
     implementation("com.googlecode.libphonenumber:libphonenumber:8.13.5")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.postgresql:r2dbc-postgresql")
 
     // Testing
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")

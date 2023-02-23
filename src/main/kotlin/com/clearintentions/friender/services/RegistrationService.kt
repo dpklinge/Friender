@@ -5,22 +5,24 @@ import com.clearintentions.friender.errors.validation.*
 import com.clearintentions.friender.models.AppUser
 import com.clearintentions.friender.models.registration.RegistrationInput
 import com.clearintentions.friender.models.registration.RegistrationOutcome
+import com.clearintentions.friender.models.toStandardizedPhoneNumberFormat
 import com.clearintentions.friender.repositories.UserRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import mu.KotlinLogging
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class RegistrationService(private val userRepository: UserRepository, private val lookupService: UserLookupService) {
+class RegistrationService(private val userRepository: UserRepository, private val lookupService: UserLookupService, private val passwordEncoder: PasswordEncoder) {
     private val logger = KotlinLogging.logger { }
-    suspend fun registerUser(user: RegistrationInput): RegistrationOutcome = coroutineScope{
-        logger.info { "Attempting to register user" }
+    suspend fun registerUser(user: RegistrationInput): RegistrationOutcome = coroutineScope {
+        logger.debug { "Attempting to register user" }
         var didSucceed = true
         val errorList = mutableListOf<ValidationError>()
-        val byEmailDeferred = async{lookupService.lookupByEmail(user.email)}
-        val byPhoneNumberDeferred = async{ lookupService.lookupByPhone(user.phoneNumber) }
+        val byEmailDeferred = async { lookupService.lookupByEmail(user.email) }
+        val byPhoneNumberDeferred = async { lookupService.lookupByPhone(user.phoneNumber.toStandardizedPhoneNumberFormat()) }
         byEmailDeferred.await()
             .fold(
                 {
@@ -57,5 +59,5 @@ class RegistrationService(private val userRepository: UserRepository, private va
         return@coroutineScope RegistrationOutcome(didSucceed, errorList)
     }
 
-    private suspend fun storeUser(appUser: RegistrationInput) = userRepository.save(AppUser(appUser.displayName, appUser.password, appUser.email, appUser.phoneNumber, appUser.gender, appUser.age))
+    private suspend fun storeUser(appUser: RegistrationInput) = userRepository.save(AppUser(appUser.displayName, passwordEncoder.encode(appUser.password), appUser.email, appUser.phoneNumber.toStandardizedPhoneNumberFormat(), appUser.gender, appUser.age))
 }

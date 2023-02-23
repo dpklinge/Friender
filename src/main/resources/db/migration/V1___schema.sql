@@ -6,4 +6,10 @@ CREATE TABLE app_user (
     phone_number TEXT NOT NULL,
     gender TEXT NOT NULL,
     age INT NOT NULL
-)
+);
+
+CREATE TABLE user_location (
+    id UUID PRIMARY KEY REFERENCES app_user,
+    home_location GEOGRAPHY,
+    current_location GEOGRAPHY
+);
